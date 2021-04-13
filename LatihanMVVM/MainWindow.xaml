@@ -1,0 +1,130 @@
+﻿<Window x:Class="LatihanMVVM.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="MainWindow" Height="356" Width="528">
+
+    <Window.Resources>
+        <Style TargetType="TextBlock">
+            <Setter Property="FontSize" Value="20" />
+            <Setter Property="FontFamily" Value="Myriad Pro" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Background">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF508FC4" Offset="0" />
+                        <GradientStop Color="#FF6F94AD" Offset="1" />
+                        <GradientStop Color="#FFC7F3FF" Offset="0.302" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Foreground">
+                <Setter.Value>
+                    <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                        <GradientStop Color="#FF5252CE" Offset="0" />
+                        <GradientStop Color="#FF0000DB" Offset="0.953" />
+                        <GradientStop Color="#FF6363CB" Offset="0.337" />
+                    </LinearGradientBrush>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Label">
+            <Setter Property="FontSize" Value="14" />
+        </Style>
+
+        <Style TargetType="TextBox">
+            <Setter Property="Language" Value="in-IN" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <Border x:Name="customBorder" Background="{TemplateBinding Background}" CornerRadius="5" BorderThickness="2" BorderBrush="Gray">
+                            <ScrollViewer x:Name="PART_ContentHost"/>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocused" Value="True">
+                                <Setter TargetName="customBorder" Property="Effect">
+                                    <Setter.Value>
+                                        <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#578EC9"/>
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                            <Trigger Property="IsKeyboardFocused" Value="False">
+                                <Setter Property="Foreground" Value="Gray" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Validation.ErrorTemplate">
+                <Setter.Value>
+                    <ControlTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <AdornedElementPlaceholder />
+                            <TextBlock Text="Perlu diperbaiki!" Padding="3" Foreground="Red" />
+                        </StackPanel>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="#DEF2FC" />
+            <Setter Property="Foreground" Value="Black" />
+            <Setter Property="FontSize" Value="15"/>
+            <Setter Property="Effect">
+                <Setter.Value>
+                    <DropShadowEffect BlurRadius="10" ShadowDepth="0" Color="#578EC9"/>
+                </Setter.Value>
+            </Setter>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border x:Name="customBorder" Background="{TemplateBinding Background}" CornerRadius="4" BorderThickness="2" BorderBrush="Gray">
+                            <ContentPresenter Content="{TemplateBinding Content}" HorizontalAlignment="Center" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#2394CC" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter Property="Effect" Value="{x:Null}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Effect">
+                                    <Setter.Value>
+                                        <BlurEffect Radius="3"  />
+                                    </Setter.Value>
+                                </Setter>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Resources>
+
+    <Grid>
+        <Label Content="Nama Barang:" Height="29" HorizontalAlignment="Left" Margin="0,49,0,0" Name="label2" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="107" />
+        <TextBox Height="23" HorizontalAlignment="Stretch" Margin="112,55,12,0" Name="textBox1" VerticalAlignment="Top" Text="{Binding Path=NamaBarang}"/>
+        <Label Content="Jumlah:" Height="27" HorizontalAlignment="Left" Margin="1,86,0,0" Name="label3" VerticalAlignment="Top" Width="106" HorizontalContentAlignment="Right" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="113,90,0,0" Name="textBox2" VerticalAlignment="Top" Width="62" Text="{Binding Path=Jumlah, StringFormat={}{0:#,0}}"/>
+        <Label Content="Harga:" Height="28" HorizontalAlignment="Left" Margin="12,122,0,0" Name="label4" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="95" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="113,127,0,0" Name="textBox3" VerticalAlignment="Top" Width="124" Text="{Binding Path=Harga, StringFormat={}{0:C}}"/>
+        <Button Content="Simpan" Height="27" HorizontalAlignment="Left" Margin="207,228,0,0" Name="button1" VerticalAlignment="Top" Width="82" Command="{Binding SimpanCommand}"/>
+        <Label Content="Diskon (%):" Height="33" HorizontalAlignment="Left" Margin="12,161,0,0" Name="label5" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="95" />
+        <TextBox Height="23" HorizontalAlignment="Left" Margin="113,165,0,0" Name="textBox4" VerticalAlignment="Top" Width="62" Text="{Binding Path=DiskonPersen, StringFormat={}{0:#.#}}"/>
+        <Label Content="Total:" Height="33" HorizontalAlignment="Left" Margin="12,194,0,0" Name="label6" VerticalAlignment="Top" HorizontalContentAlignment="Right" Width="95" />
+        <Label Height="28" HorizontalAlignment="Left" Margin="113,194,0,0" Name="label7" VerticalAlignment="Top" Width="402" Content="{Binding Path=Total}"/>
+        <TextBlock Height="28" HorizontalAlignment="Stretch" Name="textBlock1" Text="Tambah Item Penjualan" VerticalAlignment="Top" TextAlignment="Center" Margin="0,12,0,0" />
+
+        <Grid.Background>
+            <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
+                <GradientStop Color="#FFB7CEFF" Offset="0.192" />
+                <GradientStop Color="White" Offset="1" />
+                <GradientStop Color="#FF1648AD" Offset="0" />
+            </LinearGradientBrush>
+        </Grid.Background>
+
+    </Grid>
+</Window>
